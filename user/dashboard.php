@@ -4,16 +4,6 @@
   if(!isset($_SESSION['id'])){
     header('Location: ../index.php');
   }
-
-  $result = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'admin'");
-  $result2 = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'user'");
-  $result3 = mysqli_query($conn, "SELECT * FROM diagnoses_tbl");
-
-  $admin = mysqli_num_rows($result);
-  $user = mysqli_num_rows($result2);
-  $diagnoses = mysqli_num_rows($result3);
-  
-  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,19 +33,17 @@
       <!-- End Sidebar -->
 
       <div class="main-panel">
-        <?php include("../includes/header.php"); ?>
+      <?php include("../includes/header.php"); ?>
 
         <div class="container">
           <div class="page-inner">
-            <div
-              class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
-            >
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
                 <h3 class="fw-bold mb-3">Dashboard</h3>
               </div>
               <div class="ms-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
-                <a href="#" class="btn btn-primary btn-round">Add Admin</a>
+                <a href="take_test.php" class="btn btn-primary btn-round">Take test</a>
               </div>
             </div>
             <div class="row">
@@ -72,8 +60,8 @@
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Users</p>
-                          <h4 class="card-title"><?php echo $user;?></h4>
+                          <p class="card-category">Patients</p>
+                          <h4 class="card-title">1,294</h4>
                         </div>
                       </div>
                     </div>
@@ -85,14 +73,16 @@
                   <div class="card-body">
                     <div class="row align-items-center">
                       <div class="col-icon">
-                        <div class="icon-big text-center icon-info bubble-shadow-small">
+                        <div
+                          class="icon-big text-center icon-info bubble-shadow-small"
+                        >
                           <i class="fas fa-user-check"></i>
                         </div>
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                           <p class="card-category">Admin</p>
-                          <h4 class="card-title"><?php echo $admin;?></h4>
+                          <h4 class="card-title">1303</h4>
                         </div>
                       </div>
                     </div>
@@ -112,8 +102,8 @@
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Diagnosis</p>
-                          <h4 class="card-title"><?php echo $diagnoses?></h4>
+                          <p class="card-category">Sales</p>
+                          <h4 class="card-title">$ 1,345</h4>
                         </div>
                       </div>
                     </div>
@@ -536,7 +526,7 @@
         </div>
 
         <?php include("../includes/footer.php")?>
-
+        
       </div>
 
     </div>

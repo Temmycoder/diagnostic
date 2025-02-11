@@ -4,6 +4,21 @@
   if(!isset($_SESSION['id'])){
     header('Location: ../index.php');
   }
+  if(isset($_POST['submit'])){
+    $cat = $_POST['cat'];
+    $text = $_POST['texts'];
+
+    $results = mysqli_query($conn, "SELECT * FROM category_tbl WHERE cat_name = '$cat'");
+    if (mysqli_num_rows($results) < 1) {
+      $error = "<div class='alert alert-danger'>The disease category does not exist</div>";
+    }else{
+      $insert = mysqli_query($conn, "INSERT INTO questions_tbl (category, question_text) VALUES('$cat', '$text')");
+      if($insert){
+        $success = "<div class='alert alert-success'>The question has been successfully inserted</div>";
+      }
+    }
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -32,38 +47,40 @@
       <div class="main-panel">
       <?php include("../includes/header.php"); ?>
 
-
         <div class="container bg-white">
-          <h1 class="text-center p-4">All Diagnostic questions</h1>
+        <h1 class="text-center p-4">Add a new Diagnostic question</h1>
 
           <div class="page-inner">
-            <table class="table table-responsive table-hover">
-              <tr>
-                <td>ID<td>
-                <td>Category<td>
-                <td>Question<td>
-                <td>Time Created<td>
-              </tr>
-            <?php
-              $sql = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'admin'");
-              $i = 1;
-              while ($result = mysqli_fetch_array($sql)){
+            <?php echo "$error $success"; ?>
+            <form action="" method="post">
+                <div class="mb-5 container-fluid">
+                  <div class="">
+                    <div class="col-5">
+                      <label><h4>Category:</h4></label>
+                      
+                      <select class="form-control" name="cat">
+                        <?php
+                          $sql = mysqli_query($conn, "SELECT * FROM category_tbl");
+                          while ($result= mysqli_fetch_array($sql)){
+                            echo "<option value='$result[1]'>$result[1]</option>";
+                          }
+                        ?>
+                      </select>
+                    </div><br>
 
-                echo "
-                <tr>
-                  <td>$i<td>
-                  <td>$result[1]<td>
-                  <td>$result[2]<td>
-                  <td>$result[3]<td>
-                </tr>";
-                $i++;
-              }
-            ?>
-            </table>
+                    <div class="col-5">
+                      <label><h4>Question:</h4></label>
+                      <textarea class="form-control" cols="45" rows="9" name="texts" required autofocus></textarea><br>
+                      <input type="submit" name="submit" class="btn btn-primary mt-4"/>
+                    </div>
+                  </div>
+                </div>
+            </form>
           </div>
         </div>
 
         <?php include("../includes/footer.php")?>
+
       </div>
 
     </div>

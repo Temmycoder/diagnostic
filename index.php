@@ -19,7 +19,7 @@
       if($row['role'] == 'admin'){
         header("Location:admin/dashboard.php");
       }else{
-        header("Location:diagnostics.php");
+        header("Location:user/dashboard.php");
       }
     }
   }

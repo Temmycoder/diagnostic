@@ -45,7 +45,7 @@
                 <td>Time Created<td>
               </tr>
             <?php
-              $sql = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'admin'");
+              $sql = mysqli_query($conn, "SELECT * FROM questions_tbl");
               $i = 1;
               while ($result = mysqli_fetch_array($sql)){
 

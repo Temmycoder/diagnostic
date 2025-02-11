@@ -4,6 +4,22 @@
   if(!isset($_SESSION['id'])){
     header('Location: ../index.php');
   }
+  if(isset($_POST['submit'])){
+
+    $cat = $_POST['cat'];
+    $result = mysqli_query($conn, "SELECT * FROM category_tbl WHERE cat_name = '$cat'");
+
+    if(mysqli_num_rows($result) > 0 ){
+      $error = "<div class='alert alert-danger'>The category of illness already exists</div>";
+    }else{
+      $insert = "INSERT INTO category_tbl (cat_name) values ('$cat')";
+
+      if(mysqli_query($conn, $insert)){
+        $success = "<div class='alert alert-success'>The category of illness has been successfully updated</div>";
+
+      }
+    }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -33,37 +49,34 @@
       <?php include("../includes/header.php"); ?>
 
 
-        <div class="container bg-white">
-          <h1 class="text-center p-4">All Diagnostic questions</h1>
-
+        <div class="container">
           <div class="page-inner">
-            <table class="table table-responsive table-hover">
-              <tr>
-                <td>ID<td>
-                <td>Category<td>
-                <td>Question<td>
-                <td>Time Created<td>
-              </tr>
-            <?php
-              $sql = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'admin'");
-              $i = 1;
-              while ($result = mysqli_fetch_array($sql)){
-
-                echo "
-                <tr>
-                  <td>$i<td>
-                  <td>$result[1]<td>
-                  <td>$result[2]<td>
-                  <td>$result[3]<td>
-                </tr>";
-                $i++;
-              }
-            ?>
-            </table>
+            <?php echo "$error $success"?>
+            <div class="col-5">
+              <h2>Categories</h2>
+                <ul type="circle">
+                <?php
+                  $sql = mysqli_query($conn, "SELECT * FROM category_tbl");
+                  while ($result= mysqli_fetch_array($sql)){
+                    echo "<h4 class='text-capitalize'><li>$result[1]</li></h4>";
+                  }
+                ?><br>
+                </ul>
+            </div>
+            <form action="" method="post">
+              <div class="mb-5 container-fluid">
+                <h3>Add new category</h3>
+                <div class="col-5 pt-2">
+                  <input type="text" name="cat" class="form-control border-primary" required/>
+                  <input type="submit" name="submit" class="btn btn-primary mt-4"/>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
 
         <?php include("../includes/footer.php")?>
+
       </div>
 
     </div>

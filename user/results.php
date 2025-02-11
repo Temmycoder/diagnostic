@@ -2,8 +2,10 @@
   include("../includes/config.php");
   
   if(!isset($_SESSION['id'])){
-    header('Location: ../index.php');
+    header('Location:../index.php');
   }
+  $user_id = $_SESSION['id'];
+  $answer = $_SESSION['answer'];
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +13,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Diagnosis</title>
-    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
     <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
 
     <!-- CSS Files -->
@@ -20,6 +22,10 @@
     <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
 
     <style>
+      .log{
+        color: blueviolet !important;
+        font-size: 22px;
+      }
     </style>
   </head>
   
@@ -33,33 +39,12 @@
       <?php include("../includes/header.php"); ?>
 
 
-        <div class="container bg-white">
-          <h1 class="text-center p-4">All Diagnostic questions</h1>
-
-          <div class="page-inner">
-            <table class="table table-responsive table-hover">
-              <tr>
-                <td>ID<td>
-                <td>Category<td>
-                <td>Question<td>
-                <td>Time Created<td>
-              </tr>
-            <?php
-              $sql = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'admin'");
-              $i = 1;
-              while ($result = mysqli_fetch_array($sql)){
-
-                echo "
-                <tr>
-                  <td>$i<td>
-                  <td>$result[1]<td>
-                  <td>$result[2]<td>
-                  <td>$result[3]<td>
-                </tr>";
-                $i++;
-              }
-            ?>
-            </table>
+        <div class="container">
+          <div class="page-inner quest">
+            
+            <div class="row">
+              <h2>You appear to be experiencing the basic symptoms of typhoid fever have been diagnosed with typhoid!</h2>
+            </div>
           </div>
         </div>
 
@@ -74,6 +59,18 @@
 
     <!-- jQuery Scrollbar -->
     <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- Bootstrap Notify -->
     <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>

@@ -3,65 +3,55 @@
   $role = $_SESSION['role'];
 
   if($role == 'admin'){
-    $logo = '<a href="index.php" class="logo"><img src="../assets/img/kaiadmin/logo_light.svg" alt="navbar brand" 
-    class="navbar-brand" height="20" /></a>';
+    $logout = '<a href="../logout.php"><i class="fa fa-arrow-left"></i>Logout</a>';
+    $logo = '<a href="dashboard.php" class="logo"><img src="../assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" /></a>';
     $link = "<a href=''><i class='fas fa-desktop'></i>Statistics</a>";
-    $link1 = "<a href=''><i class='fas fa-file'></i>Diagnosis</a>";
+    $link1 = "<a href='diagnosis.php'><i class='fas fa-file'></i>Diagnosis</a>";
     $link2 = '<p><a data-bs-toggle="collapse" href="#submenu2"><i class="fas fa-bars"></i>Questions<span class="caret"></span></a></p>
-          <div class="collapse" id="submenu2">
-            <ul class="nav nav-collapse">
-              <li>
-                <a href="#">
-                  <span class="sub-item">View Questions</span>
-                </a>
-              <li>
-                <a href="#">
-                  <span class="sub-item">Add questions</span>
-                </a>
-              </li>
-            </ul>
-          </div>';
-    $link3 = '<a data-bs-toggle="collapse" href="#submenu">
-            <i class="fas fa-bars"></i>
-            <p>Admin</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="submenu">
-            <ul class="nav nav-collapse">
-              <li>
-                <a href="#">
-                  <span class="sub-item">View All Admins</span>
-                </a>
-              <li>
-                <a href="#">
-                  <span class="sub-item">Add New Admins</span>
-                </a>
-              </li>
-            </ul>
-          </div>';
-    $link4 = '<a href="#">
-            <i class="fas fa-file"></i>
-            <p>Presciptions</p>
-          </a>';
-    $link5 = '<a href="#">
-            <i class="fas fa-file"></i>
-            <p>Knowledge base</p>
-          </a>';
+              <div class="collapse" id="submenu2">
+                <ul class="nav nav-collapse">
+                  <li>
+                    <a href="questions.php">
+                      <span class="sub-item">View Questions</span>
+                    </a>
+                  <li>
+                    <a href="new_questions.php">
+                      <span class="sub-item">Add questions</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>';
+    $link3 = '<p><a data-bs-toggle="collapse" href="#submenu">
+                <i class="fas fa-bars"></i>
+                Admin
+                <span class="caret"></span>
+              </a>
+              </p>
+              <div class="collapse" id="submenu">
+                <ul class="nav nav-collapse">
+                  <li>
+                    <a href="admins.php">
+                      <span class="sub-item">View All Admins</span>
+                    </a>
+                  <li>
+                    <a href="new_admin.php">
+                      <span class="sub-item">Add New Admins</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>';
+    $link4 = '<p><a href="#"><i class="fas fa-file"></i>Presciptions</a></p>';
+    $link5 = '<p><a href="#"><i class="fas fa-file"></i>Knowledge base</a></p>';
+    $link6 = '<a href="new_category.php"><i class="fa fa-edit"></i><span class="sub-item">Categories</span></a>';
 
   }else{
-    $logo = '<a href="index.php" class="logo"><img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" 
-    class="navbar-brand" height="20" /></a>';
-    $link = "<a><i class='fas fa-desktop'></i>New Test</a>";
-    $link1 = "<a><i class='fas fa-file'></i>Medical History</a>";
-    $link2 = "<a><i class='fas fa-file'></i>Test History</a>";
-    $link4 = '<a href="#">
-            <i class="fas fa-file"></i>
-            <p>Presciptions</p>
-          </a>';
-    $link5 = '<a href="#">
-            <i class="fas fa-file"></i>
-            <p>Edit Profile</p>
-          </a>';
+    $logout = '<a href="../logout.php"><i class="fa fa-arrow-left"></i>Logout</a>';
+    $logo = '<a href="#" class="log ps-md-0 ps-5"><img src="../assets/img/kaiadmin/favicon.ico" /><span class="ps-2">DR.Webstack</span></a>';
+    $link = "<a href='take_test.php'><i class='fas fa-desktop'></i>Take Test</a>";
+    $link1 = "<a href='#'><i class='fas fa-file'></i>Medical History</a>";
+    $link2 = "<a href='#'><i class='fas fa-file'></i>Test History</a>";
+    $link3 = '<a href="#"><i class="fa fa-list"></i><p>Presciptions</p></a>';
+    $link4 = '<a href="#"><i class="fas fa-user"></i><p>Edit Profile</p></a>';
   }
 ?>
 <div class="sidebar" data-background-color="dark">
@@ -87,15 +77,7 @@
     <div class="sidebar-content">
       <ul class="nav nav-secondary">
         <li class="nav-item active">
-          <a
-            data-bs-toggle="collapse"
-            href="#"
-            class="collapsed"
-            aria-expanded="false"
-          >
-            <i class="fas fa-home"></i>
-            <p>Dashboard</p>
-          </a>
+          <a href="dashboard.php"><i class="fas fa-home"></i><p>Dashboard</p></a>
         </li>
         <li class="nav-section">
           <span class="sidebar-mini-icon">
@@ -109,10 +91,8 @@
         <li class="nav-item">
             <p><?php echo"$link1"?></p>
         </li>
-        
         <li class="nav-item">
           <?php echo"$link2"?>
-            
         </li>
         <li class="nav-item">
           <?php echo"$link3"?>
@@ -121,11 +101,13 @@
           <?php echo"$link4"?>
         </li>
         <li class="nav-item">
-          <?php echo"$link5"?>
-          
+          <p><?php echo"$link6"?></p>
         </li>
         <li class="nav-item">
-          <a href="logout.php">Logout</a>
+          <?php echo"$link5"?>
+        </li>
+        <li class="nav-item">
+          <p><?php echo"$logout"?></p>
         </li>
       </ul>
     </div>

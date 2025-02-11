@@ -4,6 +4,7 @@
   if(!isset($_SESSION['id'])){
     header('Location: ../index.php');
   }
+  $result = mysqli_query($conn, "SELECT * FROM ");
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +35,7 @@
 
 
         <div class="container bg-white">
-          <h1 class="text-center p-4">All Diagnostic questions</h1>
+          <h1 class="text-center p-4">Diagnosis History</h1>
 
           <div class="page-inner">
             <table class="table table-responsive table-hover">
@@ -45,7 +46,7 @@
                 <td>Time Created<td>
               </tr>
             <?php
-              $sql = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'admin'");
+              $sql = mysqli_query($conn, "SELECT * FROM diagnoses_tbl");
               $i = 1;
               while ($result = mysqli_fetch_array($sql)){
 
@@ -64,6 +65,7 @@
         </div>
 
         <?php include("../includes/footer.php")?>
+
       </div>
 
     </div>
