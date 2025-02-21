@@ -4,13 +4,14 @@
   if(!isset($_SESSION['id'])){
     header('Location:../index.php');
   }
-
   $user_id = $_SESSION['id'];
   $test_session_id = uniqid('usr_session_');
-  $_SESSION['test_session_id'] = $test_session_id;
   $result = mysqli_query($conn, "SELECT * FROM questions_tbl");
   $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
   $total_questions = count($questions);
+
+
+  // $time = date('h:i:s y-m-d');
 
   if(isset($_GET['page'])){
     $page = (int)$_GET['page'];
@@ -18,7 +19,7 @@
     $page = 1;
   }
 
-  $question_per_page = 2;
+  $question_per_page = 1;
 
   if(isset($questions[$page - 1])){
     $current_question = $questions[$page - 1];
@@ -27,12 +28,14 @@
     $current_question = null;
   }
 
+  //$_SESSION['categories'][$current_question['question_id']] = $current_question['category'];
+
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['answer']) && isset($_POST['question_id']) && isset($_POST['category']) ){
-    $_SESSION['answers'][$_POST['question_id']] = $_POST['answer']; // Save answer in session
+    $_SESSION['answers'] [$_POST['question_id']] = $_POST['answer']; // Save answer in session
     $_SESSION['categories'][$_POST['question_id']] = $_POST['category']; // Save category in session
 
     if ($page < $total_questions) {
-      header('Location: take_test.php?page=' . ($page + 1)); // Redirect to next question
+      header('Location: take_test2.php?page=' . ($page + 1)); // Redirect to next question
       exit(); // Stop script execution after redirection
     }else {
 
@@ -46,12 +49,9 @@
         $insert2 = mysqli_query($conn, "INSERT INTO test_sessions_tbl (user_id, session_id)
         VALUES('$user_id', '$test_session_id')");
 
-        $csrf_token = bin2hex(random_bytes(32));
-       // echo $csrf_token;
-        $_SESSION['csrf_token'] = $csrf_token; 
         header("location: results.php");
       }
-    } 
+    }
   }
 
 ?>
@@ -128,15 +128,11 @@
                 <br>
 
                 <?php if ($page > 1): ?>
-                    <a href="take_test.php?page=<?php echo $page - 1; ?>" class="btn btn-secondary">Previous</a>
+                    <a href="take_test2.php?page=<?php echo $page - 1; ?>" class="btn btn-secondary">Previous</a>
                 <?php endif; ?>
+                <input type="submit" class="btn btn-primary" value="Next" />
 
-                <?php if($page < $total_questions):?>
-                  <input type="submit" class="btn btn-primary" value="Next" />
-                <?php else:?>
-                  <input type="submit" class="btn btn-success" value="Submit" />
-                  <?php endif;?>
-              </form>
+            </form>
             </div>
           </div>
         </div>

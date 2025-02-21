@@ -33,14 +33,20 @@
                     <a href="admins.php">
                       <span class="sub-item">View All Admins</span>
                     </a>
+                  </li>
                   <li>
                     <a href="new_admin.php">
                       <span class="sub-item">Add New Admins</span>
                     </a>
                   </li>
+                  <li>
+                    <a href="bulk_upload.php">
+                      <span class="sub-item">Bulk Upload</span>
+                    </a>
+                  </li>
                 </ul>
               </div>';
-    $link4 = '<p><a href="#"><i class="fas fa-file"></i>Presciptions</a></p>';
+    $link4 = '<p><a href="prescriptions.php"><i class="fas fa-file"></i>Presciptions</a></p>';
     $link5 = '<p><a href="#"><i class="fas fa-file"></i>Knowledge base</a></p>';
     $link6 = '<a href="new_category.php"><i class="fa fa-edit"></i><span class="sub-item">Categories</span></a>';
 
@@ -49,9 +55,9 @@
     $logo = '<a href="#" class="log ps-md-0 ps-5"><img src="../assets/img/kaiadmin/favicon.ico" /><span class="ps-2">DR.Webstack</span></a>';
     $link = "<a href='take_test.php'><i class='fas fa-desktop'></i>Take Test</a>";
     $link1 = "<a href='#'><i class='fas fa-file'></i>Medical History</a>";
-    $link2 = "<a href='#'><i class='fas fa-file'></i>Test History</a>";
-    $link3 = '<a href="#"><i class="fa fa-list"></i><p>Presciptions</p></a>';
-    $link4 = '<a href="#"><i class="fas fa-user"></i><p>Edit Profile</p></a>';
+    $link2 = "<p><a href='test_history.php'><i class='fas fa-file'></i>Test History</a></p>";
+    $link3 = '<p><a href="#"><i class="fa fa-list"></i>Presciptions</a></p>';
+    $link4 = '<a href="#"><i class="fas fa-user"></i>Edit Profile</a>';
   }
 ?>
 <div class="sidebar" data-background-color="dark">

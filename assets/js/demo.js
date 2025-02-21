@@ -274,7 +274,7 @@ var statisticsChart = new Chart(ctx, {
 	data: {
 		labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 		datasets: [ {
-			label: "Subscribers",
+			label: "Tests",
 			borderColor: '#f3545d',
 			pointBackgroundColor: 'rgba(243, 84, 93, 0.6)',
 			pointRadius: 0,
@@ -284,7 +284,7 @@ var statisticsChart = new Chart(ctx, {
 			borderWidth: 2,
 			data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
 		}, {
-			label: "New Visitors",
+			label: "New Users",
 			borderColor: '#fdaf4b',
 			pointBackgroundColor: 'rgba(253, 175, 75, 0.6)',
 			pointRadius: 0,

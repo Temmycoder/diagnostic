@@ -8,11 +8,12 @@
   $result = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'admin'");
   $result2 = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'user'");
   $result3 = mysqli_query($conn, "SELECT * FROM diagnoses_tbl");
+  $result4 = mysqli_query($conn, "SELECT * FROM questions_tbl");
 
   $admin = mysqli_num_rows($result);
   $user = mysqli_num_rows($result2);
   $diagnoses = mysqli_num_rows($result3);
-  
+  $quest = mysqli_num_rows($result4);
   
 ?>
 <!DOCTYPE html>
@@ -47,15 +48,13 @@
 
         <div class="container">
           <div class="page-inner">
-            <div
-              class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
-            >
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
                 <h3 class="fw-bold mb-3">Dashboard</h3>
               </div>
               <div class="ms-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
-                <a href="#" class="btn btn-primary btn-round">Add Admin</a>
+                <a href="new_admin.php" class="btn btn-primary btn-round">Add Admin</a>
               </div>
             </div>
             <div class="row">
@@ -64,9 +63,7 @@
                   <div class="card-body">
                     <div class="row align-items-center">
                       <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-primary bubble-shadow-small"
-                        >
+                        <div class="icon-big text-center icon-primary bubble-shadow-small">
                           <i class="fas fa-users"></i>
                         </div>
                       </div>
@@ -104,9 +101,7 @@
                   <div class="card-body">
                     <div class="row align-items-center">
                       <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-success bubble-shadow-small"
-                        >
+                        <div class="icon-big text-center icon-success bubble-shadow-small">
                           <i class="fas fa-luggage-cart"></i>
                         </div>
                       </div>
@@ -125,16 +120,14 @@
                   <div class="card-body">
                     <div class="row align-items-center">
                       <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-secondary bubble-shadow-small"
-                        >
+                        <div class="icon-big text-center icon-secondary bubble-shadow-small">
                           <i class="far fa-check-circle"></i>
                         </div>
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Order</p>
-                          <h4 class="card-title">576</h4>
+                          <p class="card-category">Questions</p>
+                          <h4 class="card-title"><?php echo $quest?></h4>
                         </div>
                       </div>
                     </div>
@@ -149,20 +142,11 @@
                     <div class="card-head-row">
                       <div class="card-title">User Statistics</div>
                       <div class="card-tools">
-                        <a
-                          href="#"
-                          class="btn btn-label-success btn-round btn-sm me-2"
-                        >
-                          <span class="btn-label">
-                            <i class="fa fa-pencil"></i>
-                          </span>
-                          Export
+                        <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
+                          <span class="btn-label"><i class="fa fa-pencil"></i></span>Export
                         </a>
                         <a href="#" class="btn btn-label-info btn-round btn-sm">
-                          <span class="btn-label">
-                            <i class="fa fa-print"></i>
-                          </span>
-                          Print
+                          <span class="btn-label"><i class="fa fa-print"></i></span>Print
                         </a>
                       </div>
                     </div>
@@ -175,6 +159,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="col-md-4">
                 <div class="card card-primary card-round">
                   <div class="card-header">
@@ -182,25 +167,14 @@
                       <div class="card-title">Daily Sales</div>
                       <div class="card-tools">
                         <div class="dropdown">
-                          <button
-                            class="btn btn-sm btn-label-light dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
+                          <button class="btn btn-sm btn-label-light dropdown-toggle" type="button" id="dropdownMenuButton" 
+                          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Export
                           </button>
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#"
-                              >Something else here</a
-                            >
+                            <a class="dropdown-item" href="#">Something else here</a>
                           </div>
                         </div>
                       </div>
@@ -234,34 +208,26 @@
                 <div class="card card-round">
                   <div class="card-body">
                     <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">New Clients</div>
+                      <div class="card-title">New Users</div>
                       <div class="card-tools">
                         <div class="dropdown">
-                          <button
-                            class="btn btn-icon btn-clean me-0"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
+                          <button class="btn btn-icon btn-clean me-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-h"></i>
                           </button>
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#"
-                              >Something else here</a
-                            >
+                            <a class="dropdown-item" href="#">Something else here</a>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="card-list py-4">
-                      <div class="item-list">
+                      <?php
+
+                      $sql = mysqli_query($conn, "SELECT * FROM users_tbl WHERE role = 'user'");
+
+                      echo'<div class="item-list">
                         <div class="avatar">
                           <img
                             src="../assets/img/jm_denis.jpg"
@@ -271,7 +237,7 @@
                         </div>
                         <div class="info-user ms-3">
                           <div class="username">Jimmy Denis</div>
-                          <div class="status">Graphic Designer</div>
+                          <div class="status"></div>
                         </div>
                         <button class="btn btn-icon btn-link op-8 me-1">
                           <i class="far fa-envelope"></i>
@@ -279,103 +245,13 @@
                         <button class="btn btn-icon btn-link btn-danger op-8">
                           <i class="fas fa-ban"></i>
                         </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white"
-                            >CF</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Chandra Felix</div>
-                          <div class="status">Sales Promotion</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="../assets/img/talha.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Talha</div>
-                          <div class="status">Front End Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="../assets/img/chadengle.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Chad</div>
-                          <div class="status">CEO Zeleaf</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-primary"
-                            >H</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Hizrian</div>
-                          <div class="status">Web Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-secondary"
-                            >F</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Farrah</div>
-                          <div class="status">Marketing</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
+                      </div>';
+                      ?>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div class="col-md-8">
                 <div class="card card-round">
                   <div class="card-header">

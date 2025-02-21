@@ -1,11 +1,86 @@
 <?php
   include("../includes/config.php");
-  
+
   if(!isset($_SESSION['id'])){
     header('Location:../index.php');
   }
+  $test_id = $_SESSION['test_session_id'];
   $user_id = $_SESSION['id'];
-  $answer = $_SESSION['answer'];
+  $age = $_SESSION['age'];
+  $answer = $_SESSION['answers'];
+  $csrf_token = $_SESSION['csrf_token'];
+
+  //echo $test_session_id;
+  // SQL query
+  $sql = "SELECT q.category, SUM(CASE WHEN ur.answer = 'yes' THEN 1 ELSE 0 END) AS yes_count, 
+    COUNT(q.id) AS total_questions FROM user_responses_tbl ur JOIN questions_tbl q ON ur.question_id = q.id
+    WHERE ur.user_id = '$user_id' AND ur.test_session_id='$test_id' GROUP BY q.category ORDER BY yes_count DESC";
+
+  $result = mysqli_query($conn, $sql);
+  $diagnosis = [];
+  $highest_score = 0;
+  $possible_disease = [];
+  $percentage_score = 0;
+        
+  if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+      $category = $row['category'];
+      $yes_count = $row['yes_count'];
+      $total_questions = $row['total_questions'];
+
+      // calculate score percentage
+      $percentage_score = ($total_questions > 0) ? ($yes_count / $total_questions) * 100 : 0;
+      // stores the percentage in diagnosis array
+      $diagnosis [$category] = number_format($percentage_score, 2); 
+
+      if($percentage_score > $highest_score){
+        $highest_score = $percentage_score;
+      }
+    }
+  } else {
+      echo "Error: " . mysqli_error($conn);
+  }
+
+  $strong_threshold = 75;
+  $possible_threshold = 50;
+  
+
+  foreach ($diagnosis as $disease => $score){
+     if ($score >= $strong_threshold){
+       $possible_disease[] = $disease;
+       $possible_perc[] = $score;
+
+    }
+  }
+
+  $poss_dis = implode($possible_disease);
+  $poss_perc1 = implode($possible_perc);
+  $poss_perc = intval($poss_perc1);
+  $csrf_token_check = mysqli_query($conn, "SELECT id FROM diagnoses_tbl WHERE user_id = $user_id AND csrf_token = '$csrf_token'");
+  $csrf_result = mysqli_num_rows($csrf_token_check);
+  if($csrf_result < 1) {
+    $insert = mysqli_query($conn, "INSERT INTO diagnoses_tbl (user_id, test_session_id, diagnosis, diagnosis_percent, csrf_token) 
+    VALUES ('$user_id', '$test_id', '$poss_dis', '$poss_perc', '$csrf_token')");
+  }else{
+    header("Location: take_test.php");
+  }
+ 
+  if($age < 19){
+    $age_range = "chidren";
+  }else{
+    $age_range = "adult";
+  }
+
+  $prescription = mysqli_query($conn, "SELECT * FROM prescriptions_tbl WHERE category_name = '$poss_dis' 
+  AND age_range = '$age_range'");
+  $prescription_result = mysqli_fetch_assoc($prescription);
+
+  if($prescription_result){
+    $prescription_drug = $prescription_result['drug_name'];
+    $prescription_instructions = $prescription_result['instructions'];
+  }
+  
+  
 ?>
 
 <!DOCTYPE html>
@@ -27,9 +102,6 @@
         font-size: 22px;
       }
     </style>
-  </head>
-  
-  <body>
     <div class="wrapper">
       <!-- Sidebar -->
       <?php include("../includes/sidebar.php"); ?>
@@ -43,7 +115,45 @@
           <div class="page-inner quest">
             
             <div class="row">
-              <h2>You appear to be experiencing the basic symptoms of typhoid fever have been diagnosed with typhoid!</h2>
+              <h2>Confidence score for each disease based on your responses</h2>
+              <ol>
+              <?php 
+              
+                foreach($diagnosis as $disease => $percentage_score){
+                  echo "<li>". ucfirst ($disease).": ".  $percentage_score ."%</li>";
+                  echo "<hr/>";
+                }
+                  // echo "<p>Category: $category</p>";
+                  // echo "<p>Yes Count: $yes_count</p>";
+                  // echo "<p>Total Questions: $total_questions</p>";
+                  // echo "<p>Percentage Score: " . number_format($percentage_score, 2) . "%</p>";
+                  // echo "<hr>";
+                  
+              ?>
+              <?php
+
+                if(!empty($possible_disease)){
+                  echo"<h3 class='text-uppercase mt-5'>diagnostic result</h3>";
+                  echo"<h4 class=''>You may have <span class='text-uppercase text-primary'>". implode(" / ", $possible_disease )."</span>
+                  kindly see a doctor for additonal checkups. </h4>";
+                }else{
+                  echo"No strong evidence of infection stay safe, please see a doctor if the symptoms persists.";
+                };
+                
+                ?><br>
+                <?php
+                  
+
+                  if(!empty($prescription_result)){
+                    echo "<h3 class='text-uppercase mt-5'>Prescriptions</h3>";
+                    echo "<h4>Drug Name: " . $prescription_drug ."</h4>";
+                    echo "<h4>Usage Instructions: " . $prescription_instructions ."</h4>";
+                  }else{
+                    echo "<h4>Based on your responses we could not specify your ailment! Please see a professional doctor for further 
+                    physical treatments</h4>";
+                  }
+                ?>
+              </ol>
             </div>
           </div>
         </div>
@@ -52,6 +162,7 @@
       </div>
 
     </div>
+
     <!--   Core JS Files   -->
     <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>

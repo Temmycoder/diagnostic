@@ -1,6 +1,8 @@
 <?php
   include("../includes/config.php");
-  
+  if(!isset($_SESSION['id'])){
+    header('Location:../index.php');
+  }
   if(isset($_POST['submit'])){
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -83,13 +85,13 @@
                     <input type="password" class="form-control" name="code" placeholder="Password" maxlength="8" required/>
                   </div>
 
-                  <div class="form-group d-md-flex">
-                    <div>
+                  <div class="form-group row">
+                    <div class="col-md-6">
                       <label class="text-primary">Phone</label>
                       <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required />
                     </div><br>
                     
-                    <div class="ms-auto">
+                    <div class="col-md-6">
                       <label  class="text-primary">Age</label>
                       <input type="number" class="form-control" name="age" placeholder="Age" required/>
                     </div>
@@ -112,7 +114,8 @@
 
                 <div class="card-action text-center">
                     <input type="submit" class="btn btn-success" name="submit">
-                    <input type="reset" class="btn btn-danger">
+                    <input type="reset" class="btn btn-danger"><br><br>
+                    <a href="user_upload.php">Choose a registration form instead</a>
                 </div>
                 <div class="col-2"></div>
               </div>

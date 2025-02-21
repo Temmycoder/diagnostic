@@ -12,6 +12,7 @@
     }else{
       $row = mysqli_fetch_assoc($check);
       $_SESSION['id'] = $row['id'];
+      $_SESSION['age'] = intval($row['age']);
       $_SESSION['role'] = $row['role'];
       $_SESSION['name'] = $row['name'];
       $_SESSION['email'] = $row['email'];

@@ -3,7 +3,7 @@
     <nav class="pull-left">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link" href="http://www.themekita.com">Home</a>
+          <a class="nav-link" href="http://dashboard.php">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#"> Help </a>
@@ -14,12 +14,12 @@
       </ul>
     </nav>
     <div class="copyright">
-      2025, made with <i class="fa fa-heart heart text-danger"></i> by
-      <a href="http://www.themekita.com">TemmyCoder</a>
+      &copy; All rights reserved 2025, made with <i class="fa fa-heart heart text-danger"></i> by
+      <a href="http://github.com/TemmyCoder">TemmyCoder</a>
     </div>
     <div>
-      Inspired by
-      <a target="_blank" href="https://themewagon.com/"></a>.
+      Inspired by Teelake Devs
+      <a target="_blank" href="https://themewagon.com/"></a>
     </div>
   </div>
 </footer>
